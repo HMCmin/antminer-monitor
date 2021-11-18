@@ -103,6 +103,7 @@ AntminerMonitor runs by default in development mode, using Flask's development s
 To switch to production mode, edit `.flaskenv` and set `FLASK_ENV="production"`
 
 ## Run in screen
+chmod +x run.sh
 screen -d -m -t PAME sh run.sh
 
 ## Run AntminerMonitor as a service (systemd)
