@@ -1,4 +1,4 @@
-# Antminer Monitor [![follow on twitter][twitter]](https://twitter.com/intent/follow?screen_name=AntminerMonitor)
+# Antminer Monitor 
 
 Lite Python based Antminer Monitor !!!
 
