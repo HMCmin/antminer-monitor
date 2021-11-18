@@ -16,7 +16,8 @@ Lite Python based Antminer Monitor !!!
 - add new filed in db to store ip to proper sort
 - add new table column with pwm fans with color
 - add sorting by selected column using sorttable.js
-- 
+- change display uptime format to DD:HH:MM:SS
+
 ## Screenshot
 
 ![Alt text](/antminermonitor/static/images/antminerm.jpg?raw=true "Screenshot v0.5.0 and enchanced v0.1")
