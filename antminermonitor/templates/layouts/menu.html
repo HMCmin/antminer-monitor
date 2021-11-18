@@ -1,8 +1,8 @@
-<div>
+<div style="max-width: 70%; margin:auto;">
     <nav class="main-navigation">
         <ul class="menu">
-            <li><a href="/">Home</a></li>
 	    {% if current_user.is_authenticated -%}
+                        <li><a href="/al">Home</a></li>
             <li class="menu-item-has-children"><a href="#">Settings</a>
                 <ul class="sub-menu">
 			<li><a href="{{ url_for('user.password_update') }}">Users</a></li>
@@ -10,7 +10,8 @@
             </li>
 	    <li><a href="{{ url_for('user.logout') }}">Logout</a></li>
 	    {% elif not current_user.is_authenticated %} {# session.logged_in #}
-            <li><a href="{{ url_for('user.login') }}">Login</a></li>
+                        <li><a href="/">Home</a></li>
+		<li><a href="{{ url_for('user.login') }}">Login</a></li>
 	    {% endif -%}
         </ul>
     </nav>
