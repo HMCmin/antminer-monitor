@@ -19,6 +19,103 @@ antminer = Blueprint('antminer', __name__, template_folder='../templates')
 
 
 @antminer.route('/')
+def minerswol():
+    # Init variables
+    start = time.clock()
+    miners = Miner.query.all()
+    active_miners = []
+    inactive_miners = []
+    warnings = []
+    warnings_wol = []
+    errors = []
+    errors_wol = []
+    total_hash_rate_per_model = {}
+    miner_objects = []
+
+    # lookup table for total_hash_rate_per_model
+    for id, miner in MODELS.items():
+        total_hash_rate_per_model[id] = {"value": 0, "unit": miner.get('unit')}
+
+    # create miner objects to pass to executor.map
+    for miner in miners:
+        module = MODELS[miner.model_id]['model_module']
+        cls = MODELS[miner.model_id]['model_classname']
+        obj = getattr(sys.modules[module], cls)(miner)
+        miner_objects.append(obj)
+
+    # pass this method to executor.map to poll the miner
+    def poll(obj):
+        obj.poll()
+        return obj
+
+    # run with ThreadPoolExecutor
+    with concurrent.futures.ThreadPoolExecutor(max_workers=NUM_THREADS) as executor:
+        results = executor.map(poll, miner_objects)
+        for miner in results:
+            if miner is not None:
+                if miner.is_inactive:
+                    inactive_miners.append(miner)
+                else:
+                    active_miners.append(miner)
+
+                    for warning_wol in miner.warnings_wol:
+                        warnings_wol.append(warning_wol)
+                    for error_wol in miner.errors_wol:
+                        errors_wol.append(error_wol)
+                    total_hash_rate_per_model[
+                        miner.model_id]["value"] += miner.hash_rate_ghs5s
+
+    # Flash notifications
+    if not miners:
+        error_message_wol = ("[INFO] No miners added yet. "
+                         "Please add miners using the above form.")
+        current_app.logger.info(error_message_wol)
+        flash(error_message_wol, "info")
+    elif not errors_wol:
+        error_message_wol = ("[INFO] All miners are operating normal. "
+                         "No errors found.")
+        current_app.logger.info(error_message_wol)
+        flash(error_message_wol, "info")
+
+    for error_wol in errors_wol:
+        current_app.logger.error(error_wol)
+        flash(error_wol, "error")
+
+    for warning_wol in warnings_wol:
+        current_app.logger.error(warning_wol)
+        flash(warning_wol, "warning")
+
+    # flash("[INFO] Check chips on your miner", "info")
+    # flash("[SUCCESS] Miner added successfully", "success")
+    # flash("[WARNING] Check temperatures on your miner", "warning")
+    # flash("[ERROR] Check board(s) on your miner", "error")
+
+    # Convert the total_hash_rate_per_model into a data structure that the
+    # template can consume.
+    total_hash_rate_per_model_temp = {}
+    for key in total_hash_rate_per_model:
+        value, unit = update_unit_and_value(
+            total_hash_rate_per_model[key]["value"],
+            total_hash_rate_per_model[key]["unit"])
+        if value > 0:
+            total_hash_rate_per_model_temp[key] = "{:3.2f} {}".format(
+                value, unit)
+
+    end = time.clock()
+    loading_time = end - start
+    return render_template(
+        'asicminer/home.html',
+        version=current_app.config['__VERSION__'],
+        eversion=current_app.config['__EVERSION__'],
+        models=MODELS,
+        errors=errors,
+        warnings=warnings,
+        active_miners=active_miners,
+        inactive_miners=inactive_miners,
+        loading_time=loading_time,
+        total_hash_rate_per_model=total_hash_rate_per_model_temp)
+
+@antminer.route('/al')
 @login_required
 def miners():
     # Init variables
@@ -103,8 +200,9 @@ def miners():
     end = time.clock()
     loading_time = end - start
     return render_template(
-        'asicminer/home.html',
+        'asicminer/ahome.html',
         version=current_app.config['__VERSION__'],
+        eversion=current_app.config['__EVERSION__'],
         models=MODELS,
         errors=errors,
         warnings=warnings,
@@ -132,8 +230,11 @@ def add_miner():
 
 def add_miner(miner_ip, miner_model_id, miner_remarks):
     try:
+        ips2 = miner_ip.split('.')[0:4]
+        ipsdb = ("%03d%03d%02d%03d" % (int(ips2[0]), int(ips2[1]), int(ips2[2]), int(ips2[3])))
+        
         miner = Miner(
-            ip=miner_ip, model_id=miner_model_id, remarks=miner_remarks)
+            ip=miner_ip, ips=ipsdb, model_id=miner_model_id, remarks=miner_remarks)
         db_session.add(miner)
         db_session.commit()
         current_app.logger.info("Miner with IP Address {} added successfully".format(miner.ip))
