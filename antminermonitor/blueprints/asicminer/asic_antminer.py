@@ -9,6 +9,8 @@ from lib.util_hashrate import update_unit_and_value
 
 
 class ASIC_ANTMINER(BaseMiner):
+
+
     def __init__(self, miner):
         super(ASIC_ANTMINER, self).__init__(miner)
 
@@ -18,6 +20,7 @@ class ASIC_ANTMINER(BaseMiner):
         if miner_stats['STATUS'][0]['STATUS'] == 'error':
             self.is_inactive = True
             self.errors.append(miner_stats['STATUS'][0]['description'])
+            self.errors_wol.append(miner_stats['STATUS'][0]['description'])
         else:
             try:
                 # Get worker name
@@ -85,6 +88,8 @@ class ASIC_ANTMINER(BaseMiner):
                 if re.search("fan" + '[0-9]', fan)
                 if miner_stats['STATS'][1][fan] != 0
             ]
+            # Get fan PWM
+            self.fan_pwms = miner_stats['STATS'][1]['fan_pwm']
 
             # Get GH/S 5s
             try:
@@ -111,24 +116,52 @@ class ASIC_ANTMINER(BaseMiner):
                 # this seems to work
                 self.hw_error_rate = 0
 
-            # Get uptime
-            self.uptime = str(timedelta(seconds=miner_stats['STATS'][1]['Elapsed']))
 
+            # Get uptime
+
+#            self.uptime = time.strftime("%d:%H:%M:%S", time.gmtime(miner_stats['STATS'][1]['Elapsed']))
+
+            def seconds_to_dhms(timse):
+                seconds_to_minute   = 60
+                seconds_to_hour     = 60 * seconds_to_minute
+                seconds_to_day      = 24 * seconds_to_hour
+                days    =   timse // seconds_to_day
+                timse    %=  seconds_to_day
+                hours   =   timse // seconds_to_hour
+                timse    %=  seconds_to_hour
+                minutes =   timse // seconds_to_minute
+                timse    %=  seconds_to_minute
+                seconds = timse
+                self.uptime =("<strong>%02d</strong>:<u>%02d</u>:%02d:%02d" % (days, hours, minutes, seconds))
+            seconds_to_dhms(miner_stats['STATS'][1]['Elapsed'])
             # Flash error messages
+            
             if Xs > 0:
                 error_message = ("[WARNING] '{}' chips are defective on "
-                                 "miner '{}'.").format(Xs, self.ip)
+                                 "miner <a target='_blank' href=http://{}>{}</a>.").format(Xs, self.ip, self.ip)
                 # current_app.logger.warning(error_message)
                 # flash(error_message, "warning")
                 self.warnings.append(error_message)
+                error_message_wol = ("[WARNING]  chips are defective on "
+                                 "").format(Xs, self.ip)
+                # current_app.logger.warning(error_message)
+                # flash(error_message, "warning")
+                self.warnings_wol.append(error_message_wol)
             if Os + Xs < total_chips:
                 error_message = (
                     "[ERROR] ASIC chips are missing from miner "
-                    "'{}'. Your Antminer '{}' has '{}/{} chips'.").format(
-                        self.ip, self.model_id, Os + Xs, total_chips)
+                    "<a target='_blank' href=http://{}>{}</a>. Your Antminer '{}' has '{}/{} chips'.").format(
+                        self.ip, self.ip, self.model_id, Os + Xs, total_chips)
                 # current_app.logger.error(error_message)
                 # flash(error_message, "error")
                 self.errors.append(error_message)
+                error_message_wol = (
+                    "[ERROR] ASIC chips are missing from miner "
+                    ". Your Antminer has {}/{} chips.").format(
+                        Os + Xs, total_chips)
+                # current_app.logger.error(error_message)
+                # flash(error_message, "error")
+                self.errors_wol.append(error_message_wol)
             if Bs > 0:
                 # flash an info message. Probably the E3 is still warming up
                 # error_message = (
@@ -146,14 +179,25 @@ class ASIC_ANTMINER(BaseMiner):
 
             if not self.temperatures:
                 error_message = ("[ERROR] Could not retrieve temperatures "
-                                 "from miner '{}'.").format(self.ip)
+                                 "from miner <a target='_blank' href=http://{}>{}</a>.").format(self.ip, self.ip)
                 # current_app.logger.warning(error_message)
                 # flash(error_message, "error")
                 self.errors.append(error_message)
+                error_message_wol = ("[ERROR] Could not retrieve temperatures "
+                                 "from miner .").format(self.ip)
+                # current_app.logger.warning(error_message)
+                # flash(error_message, "error")
+                self.errors_wol.append(error_message_wol)
             else:
                 if max(self.temperatures) >= 80:
                     error_message = ("[WARNING] High temperatures on "
-                                     "miner '{}'.").format(self.ip)
+                                     "<a target='_blank' href={}>{}</a> .").format(self.ip, self.ip)
                     # current_app.logger.warning(error_message)
                     # flash(error_message, "warning")
                     self.warnings.append(error_message)
+                    error_message_wol = ("[WARNING] High temperatures on "
+                                     "").format(self.ip)
+                    # current_app.logger.warning(error_message)
+                    # flash(error_message, "warning")
+                    self.warnings_wol.append(error_message_wol)
+
