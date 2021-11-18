@@ -10,6 +10,13 @@ Lite Python based Antminer Monitor !!!
 - Display total hashrate grouped by Model
 - Password protected login page
 
+## Enchanced version changes
+- redesign look
+- add page without login with basic info
+- add new filed in db to store ip to proper sort
+- add new table column with pwm fans with color
+- add sorting by selected column using sorttable.js
+- 
 ## Screenshot
 
 ![Alt text](/antminermonitor/static/images/antminerm.jpg?raw=true "Screenshot v0.5.0 and enchanced v0.1")
@@ -111,7 +118,7 @@ systemctl start antminermonitor
 systemctl enable antminermonitor
 ```
 
-## Donations
+## Donations orginal
 
 - BTC: `1HYCBovF6mqqKMyG4m2DQxXpdKmogK4Wuw`
 - LTC: `LLrjq6nRokS74yPMspitHkXv4nLtEyebNW`
@@ -119,6 +126,12 @@ systemctl enable antminermonitor
 - ETH: `0x5bD8813Da5148fbc841bB18b9411fF72EdC8e10a`
 
 [![paypal]](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2AQ5RDGB5JVLW&source=url)
+
+## Donations enchanced 
+  - BTC  ``
+  - LTC ``
+  - DOGE ``
+  - DASH ``
 
 ## Referral
 
