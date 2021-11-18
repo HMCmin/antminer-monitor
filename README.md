@@ -119,7 +119,7 @@ systemctl start antminermonitor
 systemctl enable antminermonitor
 ```
 
-## Donations orginal
+## Donations orginal version
 
 - BTC: `1HYCBovF6mqqKMyG4m2DQxXpdKmogK4Wuw`
 - LTC: `LLrjq6nRokS74yPMspitHkXv4nLtEyebNW`
@@ -128,28 +128,8 @@ systemctl enable antminermonitor
 
 [![paypal]](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2AQ5RDGB5JVLW&source=url)
 
-## Donations enchanced 
-  - BTC  ``
-  - LTC ``
-  - DOGE ``
-  - DASH ``
-
-## Referral
-
-- Get a Ledger Nano S and protect your cryptocurrencies
-
-[![ledger]](https://www.ledgerwallet.com/r/3bf5?path=/products/ledger-nano-s&tracker=AntminerMonitor)
-
-- Listen to your favorite radio stations and earn BRO cryptocurrency !!!
-
-[![bitradio]](http://bitrad.io/?ref=59452)
-
-- Get paid to search
-
-[![presearch]](https://www.presearch.org/signup?rid=113267)
-
-[twitter]: https://img.shields.io/twitter/follow/AntminerMonitor.svg?style=social
-[paypal]: https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif
-[ledger]: https://www.ledgerwallet.com/images/promo/nano-s/ledger_nano-s_7-2-8x9-0.jpg
-[bitradio]: https://bitrad.io/images/BRO728x90.gif
-[presearch]: https://www.presearch.org/images/rf/ban-4.jpg
+## Donations enchanced version
+  - BTC  `bc1qtmmdsfdyam75kjvr429jjmnerld9vapw4ruzsf`
+  - LTC `ltc1qk8m5zxhwzu7ghw6mhr5fqet3vt72stgjp30m4v`
+  - DOGE `DSkhGoxX34yCd9zDk1eZ5SPjcd7KYFeMRH`
+  - DASH `Xos2jzzi8CkazfLiqnUbkFkr5caog96gXd`
