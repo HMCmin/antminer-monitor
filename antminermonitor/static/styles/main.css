@@ -1,5 +1,8 @@
+a {
+	text-decoration:none;
+}
 body {
-    width: 90%;
+    width: 98%;
     margin: 0 auto;
     font-family: 'Consolas', Times, serif;
     font-size: 14px;
@@ -7,7 +10,7 @@ body {
 
 .container {
     display: grid;
-    grid-template-columns: 450px 350px auto 400px;
+    grid-template-columns: 470px 370px auto auto;
     grid-gap: 3px;
 }
 
@@ -62,12 +65,42 @@ th {
     background-color: #DFF2BF;
 }
 
+.success a{
+    color: #4F8A10;
+    text-decoration:none;
+    background-color: #DFF2BF;
+}
+
 .warning {
     color: #9F6000;
+    background-color: #FEEFB3;
+}
+
+.warning a {
+    color: #9F6000;
+    text-decoration:none;
     background-color: #FEEFB3;
 }
 
 .error {
     color: #D8000C;
     background-color: #FFBABA;
+}
+
+.error a {
+    color: #D8000C;
+    text-decoration:none;
+    background-color: #FFBABA;
+}
+
+.pwmu50 {
+	background-color: #32CD32;
+}
+
+.pwmu80 {
+	background-color: #FFD700;
+}
+
+.pwmo80 {
+	background-color: #F08080;
 }
