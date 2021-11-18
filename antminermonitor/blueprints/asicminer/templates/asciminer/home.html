@@ -1,0 +1,47 @@
+{% extends 'layouts/base.html' %}
+
+{% block meta_description %}
+Antminer Monitor, antminer, monitor, antmon, bitmain, bitcoin, litecoin, dash,
+cryptocurrency, crypto, miner, mine, mining
+{% endblock %}
+{% block title %}Antminer Monitor {{ version }} || enchanced version {{ eversion }}{% endblock %}
+
+{% block body %}
+        <fieldset name="total_hashrate" style="height:130px;">
+            <legend>Total hashrate per model (5s)</legend>
+            <ul>
+                {%- for model in total_hash_rate_per_model|sort %}
+                    <li><u>{{ model }}:</u> <strong>{{ total_hash_rate_per_model[model] }}</strong>
+                    </li>
+                {%- endfor %}
+            </ul>
+        </fieldset>
+<br>
+
+{%- with messages = get_flashed_messages(with_categories=true) %}
+    {%- if messages %}
+        {%- for category, message in messages %}
+            <div class="{{ category }}">
+                <strong>{{ message }}</strong>
+            </div>
+        {%- endfor %}
+    {%- endif %}
+{%- endwith %}
+<br>
+
+{%- if inactive_miners %}
+    <fieldset name="inactive_miner_list">
+        <legend>In-active Miners ({{ inactive_miners|length }})</legend>
+    </fieldset>
+{%- endif %}
+<br>
+
+<fieldset name="active_miner_list">
+    <legend>Active Miners ({{ active_miners|length }})</legend>
+</fieldset>
+{% endblock %}
+
+{% block tail_js -%}
+{{ super() -}}
+    <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+{% endblock -%}
