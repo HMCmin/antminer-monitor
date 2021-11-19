@@ -122,6 +122,12 @@ systemctl start antminermonitor
 # And automatically get it to start on boot
 systemctl enable antminermonitor
 ```
+## Donations enchanced version
+  - BTC  `bc1qtmmdsfdyam75kjvr429jjmnerld9vapw4ruzsf`
+  - LTC `ltc1qk8m5zxhwzu7ghw6mhr5fqet3vt72stgjp30m4v`
+  - DOGE `DSkhGoxX34yCd9zDk1eZ5SPjcd7KYFeMRH`
+  - DASH `Xos2jzzi8CkazfLiqnUbkFkr5caog96gXd`
+
 
 ## Donations orginal version
 
@@ -129,11 +135,3 @@ systemctl enable antminermonitor
 - LTC: `LLrjq6nRokS74yPMspitHkXv4nLtEyebNW`
 - DASH: `XuEnZtsCmWcDwKVe82wQddsfwUifXyeRoQ`
 - ETH: `0x5bD8813Da5148fbc841bB18b9411fF72EdC8e10a`
-
-[![paypal]](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2AQ5RDGB5JVLW&source=url)
-
-## Donations enchanced version
-  - BTC  `bc1qtmmdsfdyam75kjvr429jjmnerld9vapw4ruzsf`
-  - LTC `ltc1qk8m5zxhwzu7ghw6mhr5fqet3vt72stgjp30m4v`
-  - DOGE `DSkhGoxX34yCd9zDk1eZ5SPjcd7KYFeMRH`
-  - DASH `Xos2jzzi8CkazfLiqnUbkFkr5caog96gXd`
