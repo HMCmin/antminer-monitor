@@ -231,7 +231,7 @@ def add_miner():
 def add_miner(miner_ip, miner_model_id, miner_remarks):
     try:
         ips2 = miner_ip.split('.')[0:4]
-        ipsdb = ("%03d%03d%02d%03d" % (int(ips2[0]), int(ips2[1]), int(ips2[2]), int(ips2[3])))
+        ipsdb = ("%03d%03d%03d%03d" % (int(ips2[0]), int(ips2[1]), int(ips2[2]), int(ips2[3])))
         
         miner = Miner(
             ip=miner_ip, ips=ipsdb, model_id=miner_model_id, remarks=miner_remarks)
